@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "ba2d0424-59a0-49c0-a22a-8cb21e840dce",
+		"name": "API_Testing_Booking_System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30318345"
+	},
+	"item": [
+		{
+			"name": "request to create an authentication token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"pm.environment.set(\"AccessData\",jsonData.token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"username\": \"admin\", \"password\": \"password123\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "booking endpoint with the authentication token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/booking/{{myID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{myID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"pm.environment.set(\"myID\",jsonData.bookingid)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Prapti\",\r\n    \"lastname\": \"Saha\",\r\n    \"totalprice\": 111000,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2024-01-01\",\r\n        \"checkout\": \"2024-01-01\"\r\n    },\r\n    \"additionalneeds\": \"super bowls\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/booking/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an Existing Booking",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{AccessData}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Rim\",\r\n    \"lastname\": \"Allen\",\r\n    \"totalprice\": 111,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2024-02-01\",\r\n        \"checkout\": \"2024-05-01\"\r\n    },\r\n    \"additionalneeds\": \"super bowls\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/booking/{{myID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{myID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "to partially update the selected booking",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "token = {{AccessData}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"firstname\": \"Prionti\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/booking/{{myID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{myID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "token = {{AccessData}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/booking/{{myID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{myID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
